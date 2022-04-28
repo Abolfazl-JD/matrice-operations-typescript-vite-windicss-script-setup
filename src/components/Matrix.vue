@@ -21,7 +21,7 @@ const poweredNumber = ref(2)
     <h3
       class="w-full bg-green-500 font-bold text-xl text-white py-1 pl-1 text-center"
     >
-      Matrix A
+      <slot></slot>
     </h3>
     <div class="flex gap-6 mt-2">
       <div class="row">

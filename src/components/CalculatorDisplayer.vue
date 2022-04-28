@@ -5,14 +5,14 @@ import Matrix from "./Matrix.vue"
 <template>
   <div class="container w-full px-9">
     <div class="flex justify-between">
-      <Matrix />
+      <Matrix>Matrix A</Matrix>
       <div class="self-start mt-10">
         <button class="text-xl mx-auto operations-buttons">→ <br />←</button>
         <button class="operations-buttons">A + B</button>
         <button class="operations-buttons">A - B</button>
         <button class="operations-buttons">A × B</button>
       </div>
-      <Matrix />
+      <Matrix>Matrix B</Matrix>
     </div>
     <div class="w-full bg-red-500 text-white p-2 text-center text-3xl mt-2">
       Result
