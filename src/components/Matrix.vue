@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { computed, ref } from "vue"
+import { computed, ref, watchEffect } from "vue"
 
 const matrixColumns = ref(2)
 const matrixRows = ref(2)
 
-const myNewMatrix = computed(() => {
+const myNewMatrix = computed<number[][]>(() => {
   return new Array(matrixRows.value)
     .fill(0)
     .map((c) => new Array(matrixColumns.value).fill(0))
@@ -12,6 +12,24 @@ const myNewMatrix = computed(() => {
 
 const multiplyNumber = ref(2)
 const poweredNumber = ref(2)
+
+const determinant = (m: number[][]): number => {
+  return m.length == 1
+    ? m[0][0]
+    : m.length == 2
+    ? m[0][0] * m[1][1] - m[0][1] * m[1][0]
+    : m[0].reduce(
+        (r, e, i) =>
+          r +
+          (-1) ** (i + 2) *
+            e *
+            determinant(m.slice(1).map((c) => c.filter((_, j) => i != j))),
+        0
+      )
+}
+
+const resultDet = ref(0)
+watchEffect(() => {})
 </script>
 
 <template>
@@ -23,7 +41,7 @@ const poweredNumber = ref(2)
     >
       <slot></slot>
     </h3>
-    <div class="flex gap-6 mt-2">
+    <div class="flex gap-6 mt-2 border-b-2">
       <div class="row">
         <span class="block pl-2">Row</span>
         <div class="flex gap-1">
@@ -67,7 +85,7 @@ const poweredNumber = ref(2)
         </div>
       </div>
       <span class="self-center text-4xl">×</span>
-      <div class="row">
+      <div class="column">
         <span class="block">Column</span>
         <div class="flex gap-1 mt-1">
           <input
@@ -126,9 +144,14 @@ const poweredNumber = ref(2)
         />
       </div>
     </div>
-    <div class="mt-7">
+    <div class="mt-3 pt-4 border-t-2">
       <div class="flex gap-2 justify-around">
-        <button class="functional-btn">Determinant</button>
+        <button
+          @click="resultDet = determinant(myNewMatrix)"
+          class="functional-btn"
+        >
+          Determinant
+        </button>
         <button class="functional-btn">Invrese</button>
         <button class="functional-btn">Transpose</button>
         <button class="functional-btn">clear</button>
