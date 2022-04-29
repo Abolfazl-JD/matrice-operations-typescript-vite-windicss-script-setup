@@ -1,5 +1,9 @@
 <script setup lang="ts">
-import { computed, ref, watchEffect } from "vue"
+import { computed, ref, watch } from "vue"
+
+const emits = defineEmits<{
+  (event: "calc-determinant", result: number): void
+}>()
 
 const matrixColumns = ref(2)
 const matrixRows = ref(2)
@@ -29,7 +33,6 @@ const determinant = (m: number[][]): number => {
 }
 
 const resultDet = ref(0)
-watchEffect(() => {})
 </script>
 
 <template>
